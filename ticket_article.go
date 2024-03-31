@@ -12,7 +12,7 @@ func (c *Client) TicketArticleByTicket(ticketID int) (data *[]map[string]interfa
 	return data, c.SendWithAuth(req, data)
 }
 
-func (c *Client) TicketArticleShow(ticketArticleID int) (data *[]map[string]interface{}, err error) {
+func (c *Client) TicketArticleShow(ticketArticleID int) (data *map[string]interface{}, err error) {
 	url := fmt.Sprintf("%s/api/v1/ticket_articles/%d", c.Url, ticketArticleID)
 	req, err := c.NewRequest("GET", url, nil)
 	if err != nil {
@@ -22,7 +22,7 @@ func (c *Client) TicketArticleShow(ticketArticleID int) (data *[]map[string]inte
 	return data, c.SendWithAuth(req, data)
 }
 
-func (c *Client) TicketArticleCreate(t *map[string]interface{}) (data *[]map[string]interface{}, err error) {
+func (c *Client) TicketArticleCreate(t *map[string]interface{}) (data *map[string]interface{}, err error) {
 	url := fmt.Sprintf("%s/api/v1/ticket_articles", c.Url)
 	req, err := c.NewRequest("POST", url, t)
 	if err != nil {
