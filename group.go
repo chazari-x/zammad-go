@@ -9,7 +9,8 @@ func (c *Client) GroupList() (data *[]map[string]interface{}, err error) {
 		return
 	}
 
-	return data, c.SendWithAuth(req, data)
+	err = c.SendWithAuth(req, data)
+	return
 }
 
 func (c *Client) GroupShow(groupID int) (data *map[string]interface{}, err error) {
@@ -19,7 +20,8 @@ func (c *Client) GroupShow(groupID int) (data *map[string]interface{}, err error
 		return
 	}
 
-	return data, c.SendWithAuth(req, data)
+	err = c.SendWithAuth(req, data)
+	return
 }
 
 func (c *Client) GroupCreate(g *map[string]interface{}) (data *map[string]interface{}, err error) {
@@ -29,7 +31,8 @@ func (c *Client) GroupCreate(g *map[string]interface{}) (data *map[string]interf
 		return
 	}
 
-	return data, c.SendWithAuth(req, data)
+	err = c.SendWithAuth(req, data)
+	return
 }
 
 func (c *Client) GroupUpdate(groupID int, g *map[string]interface{}) (data *map[string]interface{}, err error) {
@@ -39,7 +42,8 @@ func (c *Client) GroupUpdate(groupID int, g *map[string]interface{}) (data *map[
 		return
 	}
 
-	return data, c.SendWithAuth(req, data)
+	err = c.SendWithAuth(req, data)
+	return
 }
 
 func (c *Client) GroupDelete(groupID int) error {

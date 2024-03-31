@@ -9,7 +9,8 @@ func (c *Client) TicketStateList() (data *[]map[string]interface{}, err error) {
 		return
 	}
 
-	return data, c.SendWithAuth(req, data)
+	err = c.SendWithAuth(req, data)
+	return
 }
 
 func (c *Client) TicketStateShow(ticketStateID int) (data *map[string]interface{}, err error) {
@@ -19,7 +20,8 @@ func (c *Client) TicketStateShow(ticketStateID int) (data *map[string]interface{
 		return
 	}
 
-	return data, c.SendWithAuth(req, data)
+	err = c.SendWithAuth(req, data)
+	return
 }
 
 func (c *Client) TicketStateCreate(t *map[string]interface{}) (data *map[string]interface{}, err error) {
@@ -29,7 +31,8 @@ func (c *Client) TicketStateCreate(t *map[string]interface{}) (data *map[string]
 		return
 	}
 
-	return data, c.SendWithAuth(req, data)
+	err = c.SendWithAuth(req, data)
+	return
 }
 
 func (c *Client) TicketStateUpdate(ticketStateID int, t *map[string]interface{}) (data *map[string]interface{}, err error) {
@@ -39,7 +42,8 @@ func (c *Client) TicketStateUpdate(ticketStateID int, t *map[string]interface{})
 		return
 	}
 
-	return data, c.SendWithAuth(req, data)
+	err = c.SendWithAuth(req, data)
+	return
 }
 
 func (c *Client) TicketStateDelete(ticketStateID int) error {

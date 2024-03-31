@@ -9,7 +9,8 @@ func (c *Client) UserMe() (data *map[string]interface{}, err error) {
 		return
 	}
 
-	return data, c.SendWithAuth(req, data)
+	err = c.SendWithAuth(req, data)
+	return
 }
 
 func (c *Client) UserList() (data *[]map[string]interface{}, err error) {
@@ -19,7 +20,8 @@ func (c *Client) UserList() (data *[]map[string]interface{}, err error) {
 		return
 	}
 
-	return data, c.SendWithAuth(req, data)
+	err = c.SendWithAuth(req, data)
+	return
 }
 
 func (c *Client) UserSearch(query string, limit int) (data *[]map[string]interface{}, err error) {
@@ -29,7 +31,8 @@ func (c *Client) UserSearch(query string, limit int) (data *[]map[string]interfa
 		return
 	}
 
-	return data, c.SendWithAuth(req, data)
+	err = c.SendWithAuth(req, data)
+	return
 }
 
 func (c *Client) UserShow(userID int) (data *map[string]interface{}, err error) {
@@ -39,7 +42,8 @@ func (c *Client) UserShow(userID int) (data *map[string]interface{}, err error) 
 		return
 	}
 
-	return data, c.SendWithAuth(req, data)
+	err = c.SendWithAuth(req, data)
+	return
 }
 
 func (c *Client) UserCreate(u *map[string]interface{}) (data *map[string]interface{}, err error) {
@@ -49,7 +53,8 @@ func (c *Client) UserCreate(u *map[string]interface{}) (data *map[string]interfa
 		return
 	}
 
-	return data, c.SendWithAuth(req, data)
+	err = c.SendWithAuth(req, data)
+	return
 }
 
 func (c *Client) UserUpdate(userID int, u *map[string]interface{}) (data *map[string]interface{}, err error) {
@@ -59,7 +64,8 @@ func (c *Client) UserUpdate(userID int, u *map[string]interface{}) (data *map[st
 		return
 	}
 
-	return data, c.SendWithAuth(req, data)
+	err = c.SendWithAuth(req, data)
+	return
 }
 
 func (c *Client) UserDelete(userID int) error {

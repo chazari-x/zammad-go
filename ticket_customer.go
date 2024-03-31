@@ -9,5 +9,6 @@ func (c *Client) TicketListByCustomer(customer int) (data *map[string]interface{
 		return
 	}
 
-	return data, c.SendWithAuth(req, data)
+	err = c.SendWithAuth(req, data)
+	return
 }

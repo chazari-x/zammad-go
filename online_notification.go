@@ -9,7 +9,8 @@ func (c *Client) OnlineNotificationList() (data *[]map[string]interface{}, err e
 		return
 	}
 
-	return data, c.SendWithAuth(req, data)
+	err = c.SendWithAuth(req, data)
+	return
 }
 
 func (c *Client) OnlineNotificationShow(notificationID int) (data *map[string]interface{}, err error) {
@@ -19,7 +20,8 @@ func (c *Client) OnlineNotificationShow(notificationID int) (data *map[string]in
 		return
 	}
 
-	return data, c.SendWithAuth(req, data)
+	err = c.SendWithAuth(req, data)
+	return
 }
 
 func (c *Client) OnlineNotificationUpdate(notificationID int, n *map[string]interface{}) (data *map[string]interface{}, err error) {
@@ -29,7 +31,8 @@ func (c *Client) OnlineNotificationUpdate(notificationID int, n *map[string]inte
 		return
 	}
 
-	return data, c.SendWithAuth(req, data)
+	err = c.SendWithAuth(req, data)
+	return
 }
 
 func (c *Client) OnlineNotificationDelete(notificationID int) error {

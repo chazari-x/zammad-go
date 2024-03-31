@@ -9,7 +9,8 @@ func (c *Client) TagList(ticketID int) (data *[]map[string]interface{}, err erro
 		return
 	}
 
-	return data, c.SendWithAuth(req, data)
+	err = c.SendWithAuth(req, data)
+	return
 }
 
 func (c *Client) TagSearch(term string) (data *[]map[string]interface{}, err error) {
@@ -19,7 +20,8 @@ func (c *Client) TagSearch(term string) (data *[]map[string]interface{}, err err
 		return
 	}
 
-	return data, c.SendWithAuth(req, data)
+	err = c.SendWithAuth(req, data)
+	return
 }
 
 func (c *Client) TagAdd(t *map[string]interface{}) error {
@@ -49,7 +51,8 @@ func (c *Client) TagAdminList() (data *[]map[string]interface{}, err error) {
 		return
 	}
 
-	return data, c.SendWithAuth(req, data)
+	err = c.SendWithAuth(req, data)
+	return
 }
 
 func (c *Client) TagAdminCreate(o *map[string]interface{}) error {

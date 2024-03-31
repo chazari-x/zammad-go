@@ -9,7 +9,8 @@ func (c *Client) TicketPriorityList() (data *[]map[string]interface{}, err error
 		return
 	}
 
-	return data, c.SendWithAuth(req, data)
+	err = c.SendWithAuth(req, data)
+	return
 }
 
 func (c *Client) TicketPriorityShow(ticketPriorityID int) (data *map[string]interface{}, err error) {
@@ -19,7 +20,8 @@ func (c *Client) TicketPriorityShow(ticketPriorityID int) (data *map[string]inte
 		return
 	}
 
-	return data, c.SendWithAuth(req, data)
+	err = c.SendWithAuth(req, data)
+	return
 }
 
 func (c *Client) TicketPriorityCreate(t *map[string]interface{}) (data *map[string]interface{}, err error) {
@@ -29,7 +31,8 @@ func (c *Client) TicketPriorityCreate(t *map[string]interface{}) (data *map[stri
 		return
 	}
 
-	return data, c.SendWithAuth(req, data)
+	err = c.SendWithAuth(req, data)
+	return
 }
 
 func (c *Client) TicketPriorityUpdate(ticketPriorityID int, t *map[string]interface{}) (data *map[string]interface{}, err error) {
@@ -39,7 +42,8 @@ func (c *Client) TicketPriorityUpdate(ticketPriorityID int, t *map[string]interf
 		return
 	}
 
-	return data, c.SendWithAuth(req, data)
+	err = c.SendWithAuth(req, data)
+	return
 }
 
 func (c *Client) TicketPriorityDelete(ticketPriorityID int) error {

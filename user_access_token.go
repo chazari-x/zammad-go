@@ -9,7 +9,8 @@ func (c *Client) UserAccessTokenList() (data *[]map[string]interface{}, err erro
 		return
 	}
 
-	return data, c.SendWithAuth(req, data)
+	err = c.SendWithAuth(req, data)
+	return
 }
 
 func (c *Client) UserAccessTokenCreate(t *map[string]interface{}) (data *map[string]interface{}, err error) {
@@ -19,7 +20,8 @@ func (c *Client) UserAccessTokenCreate(t *map[string]interface{}) (data *map[str
 		return
 	}
 
-	return data, c.SendWithAuth(req, data)
+	err = c.SendWithAuth(req, data)
+	return
 }
 
 func (c *Client) UserAccessTokenDelete(tokenID int) error {

@@ -9,7 +9,8 @@ func (c *Client) TicketArticleByTicket(ticketID int) (data *[]map[string]interfa
 		return
 	}
 
-	return data, c.SendWithAuth(req, data)
+	err = c.SendWithAuth(req, data)
+	return
 }
 
 func (c *Client) TicketArticleShow(ticketArticleID int) (data *map[string]interface{}, err error) {
@@ -19,7 +20,8 @@ func (c *Client) TicketArticleShow(ticketArticleID int) (data *map[string]interf
 		return
 	}
 
-	return data, c.SendWithAuth(req, data)
+	err = c.SendWithAuth(req, data)
+	return
 }
 
 func (c *Client) TicketArticleCreate(t *map[string]interface{}) (data *map[string]interface{}, err error) {
@@ -29,5 +31,6 @@ func (c *Client) TicketArticleCreate(t *map[string]interface{}) (data *map[strin
 		return
 	}
 
-	return data, c.SendWithAuth(req, data)
+	err = c.SendWithAuth(req, data)
+	return
 }

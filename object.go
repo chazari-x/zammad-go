@@ -9,7 +9,8 @@ func (c *Client) ObjectList() (data *[]map[string]interface{}, err error) {
 		return
 	}
 
-	return data, c.SendWithAuth(req, data)
+	err = c.SendWithAuth(req, data)
+	return
 }
 
 func (c *Client) ObjectShow(objectID int) (data *map[string]interface{}, err error) {
@@ -19,7 +20,8 @@ func (c *Client) ObjectShow(objectID int) (data *map[string]interface{}, err err
 		return
 	}
 
-	return data, c.SendWithAuth(req, data)
+	err = c.SendWithAuth(req, data)
+	return
 }
 
 func (c *Client) ObjectCreate(o *map[string]interface{}) (data *map[string]interface{}, err error) {
@@ -29,7 +31,8 @@ func (c *Client) ObjectCreate(o *map[string]interface{}) (data *map[string]inter
 		return
 	}
 
-	return data, c.SendWithAuth(req, data)
+	err = c.SendWithAuth(req, data)
+	return
 }
 
 func (c *Client) ObjectUpdate(objectID int, o *map[string]interface{}) (data *map[string]interface{}, err error) {
@@ -39,7 +42,8 @@ func (c *Client) ObjectUpdate(objectID int, o *map[string]interface{}) (data *ma
 		return
 	}
 
-	return data, c.SendWithAuth(req, data)
+	err = c.SendWithAuth(req, data)
+	return
 }
 
 func (c *Client) ObjectExecuteDatabaseMigration() error {

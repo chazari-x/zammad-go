@@ -9,7 +9,8 @@ func (c *Client) OrganizationList() (data *[]map[string]interface{}, err error) 
 		return
 	}
 
-	return data, c.SendWithAuth(req, data)
+	err = c.SendWithAuth(req, data)
+	return
 }
 
 func (c *Client) OrganizationSearch(query string, limit int) (data *[]map[string]interface{}, err error) {
@@ -19,7 +20,8 @@ func (c *Client) OrganizationSearch(query string, limit int) (data *[]map[string
 		return
 	}
 
-	return data, c.SendWithAuth(req, data)
+	err = c.SendWithAuth(req, data)
+	return
 }
 
 func (c *Client) OrganizationShow(organizationID int) (data *map[string]interface{}, err error) {
@@ -29,7 +31,8 @@ func (c *Client) OrganizationShow(organizationID int) (data *map[string]interfac
 		return
 	}
 
-	return data, c.SendWithAuth(req, data)
+	err = c.SendWithAuth(req, data)
+	return
 }
 
 func (c *Client) OrganizationCreate(o *map[string]interface{}) (data *map[string]interface{}, err error) {
@@ -39,7 +42,8 @@ func (c *Client) OrganizationCreate(o *map[string]interface{}) (data *map[string
 		return
 	}
 
-	return data, c.SendWithAuth(req, data)
+	err = c.SendWithAuth(req, data)
+	return
 }
 
 func (c *Client) OrganizationUpdate(organizationID int, o *map[string]interface{}) (data *map[string]interface{}, err error) {
@@ -49,7 +53,8 @@ func (c *Client) OrganizationUpdate(organizationID int, o *map[string]interface{
 		return
 	}
 
-	return data, c.SendWithAuth(req, data)
+	err = c.SendWithAuth(req, data)
+	return
 }
 
 func (c *Client) OrganizationDelete(organizationID int) error {
