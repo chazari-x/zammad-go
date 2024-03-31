@@ -2,25 +2,25 @@ package zammad
 
 import "fmt"
 
-func (c *Client) TagList(ticketID int) (data *[]map[string]interface{}, err error) {
+func (c *Client) TagList(ticketID int) (data []map[string]interface{}, err error) {
 	url := fmt.Sprintf("%s/api/v1/tags?object=Ticket&o_id=%d", c.Url, ticketID)
 	req, err := c.NewRequest("GET", url, nil)
 	if err != nil {
 		return
 	}
 
-	err = c.SendWithAuth(req, data)
+	err = c.SendWithAuth(req, &data)
 	return
 }
 
-func (c *Client) TagSearch(term string) (data *[]map[string]interface{}, err error) {
+func (c *Client) TagSearch(term string) (data []map[string]interface{}, err error) {
 	url := fmt.Sprintf("%s/api/v1/tag_search?term=%s", c.Url, term)
 	req, err := c.NewRequest("GET", url, nil)
 	if err != nil {
 		return
 	}
 
-	err = c.SendWithAuth(req, data)
+	err = c.SendWithAuth(req, &data)
 	return
 }
 
@@ -44,14 +44,14 @@ func (c *Client) TagRemove(t *map[string]interface{}) error {
 	return c.SendWithAuth(req, nil)
 }
 
-func (c *Client) TagAdminList() (data *[]map[string]interface{}, err error) {
+func (c *Client) TagAdminList() (data []map[string]interface{}, err error) {
 	url := fmt.Sprintf("%s/api/v1/tag_list", c.Url)
 	req, err := c.NewRequest("GET", url, nil)
 	if err != nil {
 		return
 	}
 
-	err = c.SendWithAuth(req, data)
+	err = c.SendWithAuth(req, &data)
 	return
 }
 
