@@ -2,28 +2,28 @@ package zammad
 
 import "fmt"
 
-func (c *Client) TagList(ticketID int) (data *[]map[string]interface{}, err error) {
-	data = &[]map[string]interface{}{}
+func (c *Client) TagList(ticketID int) (*[]map[string]interface{}, error) {
+	var data []map[string]interface{}
 	url := fmt.Sprintf("%s/api/v1/tags?object=Ticket&o_id=%d", c.Url, ticketID)
 	req, err := c.NewRequest("GET", url, nil)
 	if err != nil {
-		return
+		return &data, err
 	}
 
-	err = c.SendWithAuth(req, data)
-	return
+	err = c.SendWithAuth(req, &data)
+	return &data, err
 }
 
-func (c *Client) TagSearch(term string) (data *[]map[string]interface{}, err error) {
-	data = &[]map[string]interface{}{}
+func (c *Client) TagSearch(term string) (*[]map[string]interface{}, error) {
+	var data []map[string]interface{}
 	url := fmt.Sprintf("%s/api/v1/tag_search?term=%s", c.Url, term)
 	req, err := c.NewRequest("GET", url, nil)
 	if err != nil {
-		return
+		return &data, err
 	}
 
-	err = c.SendWithAuth(req, data)
-	return
+	err = c.SendWithAuth(req, &data)
+	return &data, err
 }
 
 func (c *Client) TagAdd(t *map[string]interface{}) error {
@@ -46,16 +46,16 @@ func (c *Client) TagRemove(t *map[string]interface{}) error {
 	return c.SendWithAuth(req, nil)
 }
 
-func (c *Client) TagAdminList() (data *[]map[string]interface{}, err error) {
-	data = &[]map[string]interface{}{}
+func (c *Client) TagAdminList() (*[]map[string]interface{}, error) {
+	var data []map[string]interface{}
 	url := fmt.Sprintf("%s/api/v1/tag_list", c.Url)
 	req, err := c.NewRequest("GET", url, nil)
 	if err != nil {
-		return
+		return &data, err
 	}
 
-	err = c.SendWithAuth(req, data)
-	return
+	err = c.SendWithAuth(req, &data)
+	return &data, err
 }
 
 func (c *Client) TagAdminCreate(o *map[string]interface{}) error {
