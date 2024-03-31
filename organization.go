@@ -2,58 +2,63 @@ package zammad
 
 import "fmt"
 
-func (c *Client) OrganizationList() (data []map[string]interface{}, err error) {
+func (c *Client) OrganizationList() (data *[]map[string]interface{}, err error) {
+	data = &[]map[string]interface{}{}
 	url := fmt.Sprintf("%s/api/v1/organizations", c.Url)
 	req, err := c.NewRequest("GET", url, nil)
 	if err != nil {
 		return
 	}
 
-	err = c.SendWithAuth(req, &data)
+	err = c.SendWithAuth(req, data)
 	return
 }
 
-func (c *Client) OrganizationSearch(query string, limit int) (data []map[string]interface{}, err error) {
+func (c *Client) OrganizationSearch(query string, limit int) (data *[]map[string]interface{}, err error) {
+	data = &[]map[string]interface{}{}
 	url := fmt.Sprintf("%s/api/v1/organizations/search?query=%s&limit=%d", c.Url, query, limit)
 	req, err := c.NewRequest("GET", url, nil)
 	if err != nil {
 		return
 	}
 
-	err = c.SendWithAuth(req, &data)
+	err = c.SendWithAuth(req, data)
 	return
 }
 
-func (c *Client) OrganizationShow(organizationID int) (data map[string]interface{}, err error) {
+func (c *Client) OrganizationShow(organizationID int) (data *map[string]interface{}, err error) {
+	data = &map[string]interface{}{}
 	url := fmt.Sprintf("%s/api/v1/organizations/%d", c.Url, organizationID)
 	req, err := c.NewRequest("GET", url, nil)
 	if err != nil {
 		return
 	}
 
-	err = c.SendWithAuth(req, &data)
+	err = c.SendWithAuth(req, data)
 	return
 }
 
-func (c *Client) OrganizationCreate(o *map[string]interface{}) (data map[string]interface{}, err error) {
+func (c *Client) OrganizationCreate(o *map[string]interface{}) (data *map[string]interface{}, err error) {
+	data = &map[string]interface{}{}
 	url := fmt.Sprintf("%s/api/v1/organizations", c.Url)
 	req, err := c.NewRequest("POST", url, o)
 	if err != nil {
 		return
 	}
 
-	err = c.SendWithAuth(req, &data)
+	err = c.SendWithAuth(req, data)
 	return
 }
 
-func (c *Client) OrganizationUpdate(organizationID int, o *map[string]interface{}) (data map[string]interface{}, err error) {
+func (c *Client) OrganizationUpdate(organizationID int, o *map[string]interface{}) (data *map[string]interface{}, err error) {
+	data = &map[string]interface{}{}
 	url := fmt.Sprintf("%s/api/v1/organizations/%d", c.Url, organizationID)
 	req, err := c.NewRequest("PUT", url, o)
 	if err != nil {
 		return
 	}
 
-	err = c.SendWithAuth(req, &data)
+	err = c.SendWithAuth(req, data)
 	return
 }
 
