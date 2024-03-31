@@ -2,76 +2,52 @@ package zammad
 
 import "fmt"
 
-func (c *Client) TicketPriorityList() (*[]map[string]interface{}, error) {
-	var ticketPriorities []map[string]interface{}
-
-	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, "/api/v1/ticket_priorities"), nil)
+func (c *Client) TicketPriorityList() (data *[]map[string]interface{}, err error) {
+	url := fmt.Sprintf("%s%s", c.Url, "/api/v1/ticket_priorities")
+	req, err := c.NewRequest("GET", url, nil)
 	if err != nil {
-		return &ticketPriorities, err
+		return
 	}
 
-	if err = c.SendWithAuth(req, &ticketPriorities); err != nil {
-		return &ticketPriorities, err
-	}
-
-	return &ticketPriorities, nil
+	return data, c.SendWithAuth(req, data)
 }
 
-func (c *Client) TicketPriorityShow(ticketPriorityID int) (*map[string]interface{}, error) {
-	var ticketPriority map[string]interface{}
-
-	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/ticket_priorities/%d", ticketPriorityID)), nil)
+func (c *Client) TicketPriorityShow(ticketPriorityID int) (data *map[string]interface{}, err error) {
+	url := fmt.Sprintf("%s/api/v1/ticket_priorities/%d", c.Url, ticketPriorityID)
+	req, err := c.NewRequest("GET", url, nil)
 	if err != nil {
-		return &ticketPriority, err
+		return
 	}
 
-	if err = c.SendWithAuth(req, &ticketPriority); err != nil {
-		return &ticketPriority, err
-	}
-
-	return &ticketPriority, nil
+	return data, c.SendWithAuth(req, data)
 }
 
-func (c *Client) TicketPriorityCreate(t *map[string]interface{}) (*map[string]interface{}, error) {
-	var ticketPriority map[string]interface{}
-
-	req, err := c.NewRequest("POST", fmt.Sprintf("%s%s", c.Url, "/api/v1/ticket_priorities"), t)
+func (c *Client) TicketPriorityCreate(t *map[string]interface{}) (data *map[string]interface{}, err error) {
+	url := fmt.Sprintf("%s%s", c.Url, "/api/v1/ticket_priorities")
+	req, err := c.NewRequest("POST", url, t)
 	if err != nil {
-		return &ticketPriority, err
+		return
 	}
 
-	if err = c.SendWithAuth(req, &ticketPriority); err != nil {
-		return &ticketPriority, err
-	}
-
-	return &ticketPriority, nil
+	return data, c.SendWithAuth(req, data)
 }
 
-func (c *Client) TicketPriorityUpdate(ticketPriorityID int, t *map[string]interface{}) (*map[string]interface{}, error) {
-	var ticketPriority map[string]interface{}
-
-	req, err := c.NewRequest("PUT", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/ticket_priorities/%d", ticketPriorityID)), t)
+func (c *Client) TicketPriorityUpdate(ticketPriorityID int, t *map[string]interface{}) (data *map[string]interface{}, err error) {
+	url := fmt.Sprintf("%s/api/v1/ticket_priorities/%d", c.Url, ticketPriorityID)
+	req, err := c.NewRequest("PUT", url, t)
 	if err != nil {
-		return &ticketPriority, err
+		return
 	}
 
-	if err = c.SendWithAuth(req, &ticketPriority); err != nil {
-		return &ticketPriority, err
-	}
-
-	return &ticketPriority, nil
+	return data, c.SendWithAuth(req, data)
 }
 
 func (c *Client) TicketPriorityDelete(ticketPriorityID int) error {
-
-	req, err := c.NewRequest("DELETE", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/ticket_priorities/%d", ticketPriorityID)), nil)
+	url := fmt.Sprintf("%s/api/v1/ticket_priorities/%d", c.Url, ticketPriorityID)
+	req, err := c.NewRequest("DELETE", url, nil)
 	if err != nil {
 		return err
 	}
 
-	if err = c.SendWithAuth(req, nil); err != nil {
-		return err
-	}
-
-	return nil
+	return c.SendWithAuth(req, nil)
 }

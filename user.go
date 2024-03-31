@@ -2,106 +2,72 @@ package zammad
 
 import "fmt"
 
-func (c *Client) UserMe() (*map[string]interface{}, error) {
-	var user map[string]interface{}
-
-	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, "/api/v1/users/me"), nil)
+func (c *Client) UserMe() (data *map[string]interface{}, err error) {
+	url := fmt.Sprintf("%s/api/v1/users/me", c.Url)
+	req, err := c.NewRequest("GET", url, nil)
 	if err != nil {
-		return &user, err
+		return
 	}
 
-	if err = c.SendWithAuth(req, &user); err != nil {
-		return &user, err
-	}
-
-	return &user, nil
+	return data, c.SendWithAuth(req, data)
 }
 
-func (c *Client) UserList() (*[]map[string]interface{}, error) {
-	var users []map[string]interface{}
-
-	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, "/api/v1/users"), nil)
+func (c *Client) UserList() (data *[]map[string]interface{}, err error) {
+	url := fmt.Sprintf("%s/api/v1/users", c.Url)
+	req, err := c.NewRequest("GET", url, nil)
 	if err != nil {
-		return &users, err
+		return
 	}
 
-	if err = c.SendWithAuth(req, &users); err != nil {
-		return &users, err
-	}
-
-	return &users, nil
+	return data, c.SendWithAuth(req, data)
 }
 
-func (c *Client) UserSearch(query string, limit int) (*[]map[string]interface{}, error) {
-	var users []map[string]interface{}
-
-	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/users/search?query=%s&limit=%d", query, limit)), nil)
+func (c *Client) UserSearch(query string, limit int) (data *[]map[string]interface{}, err error) {
+	url := fmt.Sprintf("%s/api/v1/users/search?query=%s&limit=%d", c.Url, query, limit)
+	req, err := c.NewRequest("GET", url, nil)
 	if err != nil {
-		return &users, err
+		return
 	}
 
-	if err = c.SendWithAuth(req, &users); err != nil {
-		return &users, err
-	}
-
-	return &users, nil
+	return data, c.SendWithAuth(req, data)
 }
 
-func (c *Client) UserShow(userID int) (*map[string]interface{}, error) {
-	var user map[string]interface{}
-
-	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/users/%d", userID)), nil)
+func (c *Client) UserShow(userID int) (data *map[string]interface{}, err error) {
+	url := fmt.Sprintf("%s/api/v1/users/%d", c.Url, userID)
+	req, err := c.NewRequest("GET", url, nil)
 	if err != nil {
-		return &user, err
+		return
 	}
 
-	if err = c.SendWithAuth(req, &user); err != nil {
-		return &user, err
-	}
-
-	return &user, nil
+	return data, c.SendWithAuth(req, data)
 }
 
-func (c *Client) UserCreate(u *map[string]interface{}) (*map[string]interface{}, error) {
-	var user map[string]interface{}
-
-	req, err := c.NewRequest("POST", fmt.Sprintf("%s%s", c.Url, "/api/v1/users"), u)
+func (c *Client) UserCreate(u *map[string]interface{}) (data *map[string]interface{}, err error) {
+	url := fmt.Sprintf("%s/api/v1/users", c.Url)
+	req, err := c.NewRequest("POST", url, u)
 	if err != nil {
-		return &user, err
+		return
 	}
 
-	if err = c.SendWithAuth(req, &user); err != nil {
-		return &user, err
-	}
-
-	return &user, nil
+	return data, c.SendWithAuth(req, data)
 }
 
-func (c *Client) UserUpdate(userID int, u *map[string]interface{}) (*map[string]interface{}, error) {
-	var user map[string]interface{}
-
-	req, err := c.NewRequest("PUT", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/users/%d", userID)), u)
+func (c *Client) UserUpdate(userID int, u *map[string]interface{}) (data *map[string]interface{}, err error) {
+	url := fmt.Sprintf("%s/api/v1/users/%d", c.Url, userID)
+	req, err := c.NewRequest("PUT", url, u)
 	if err != nil {
-		return &user, err
+		return
 	}
 
-	if err = c.SendWithAuth(req, &user); err != nil {
-		return &user, err
-	}
-
-	return &user, nil
+	return data, c.SendWithAuth(req, data)
 }
 
 func (c *Client) UserDelete(userID int) error {
-
-	req, err := c.NewRequest("PUT", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/users/%d", userID)), nil)
+	url := fmt.Sprintf("%s/api/v1/users/%d", c.Url, userID)
+	req, err := c.NewRequest("PUT", url, nil)
 	if err != nil {
 		return err
 	}
 
-	if err = c.SendWithAuth(req, nil); err != nil {
-		return err
-	}
-
-	return nil
+	return c.SendWithAuth(req, nil)
 }

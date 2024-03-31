@@ -2,46 +2,32 @@ package zammad
 
 import "fmt"
 
-func (c *Client) UserAccessTokenList() (*[]map[string]interface{}, error) {
-	var userAccessTokens []map[string]interface{}
-
-	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, "/api/v1/user_access_token"), nil)
+func (c *Client) UserAccessTokenList() (data *[]map[string]interface{}, err error) {
+	url := fmt.Sprintf("%s/api/v1/user_access_token", c.Url)
+	req, err := c.NewRequest("GET", url, nil)
 	if err != nil {
-		return &userAccessTokens, err
+		return
 	}
 
-	if err = c.SendWithAuth(req, &userAccessTokens); err != nil {
-		return &userAccessTokens, err
-	}
-
-	return &userAccessTokens, nil
+	return data, c.SendWithAuth(req, data)
 }
 
-func (c *Client) UserAccessTokenCreate(t *map[string]interface{}) (*map[string]interface{}, error) {
-	var userAccessToken map[string]interface{}
-
-	req, err := c.NewRequest("POST", fmt.Sprintf("%s%s", c.Url, "/api/v1/user_access_token"), t)
+func (c *Client) UserAccessTokenCreate(t *map[string]interface{}) (data *map[string]interface{}, err error) {
+	url := fmt.Sprintf("%s/api/v1/user_access_token", c.Url)
+	req, err := c.NewRequest("POST", url, t)
 	if err != nil {
-		return &userAccessToken, err
+		return
 	}
 
-	if err = c.SendWithAuth(req, &userAccessToken); err != nil {
-		return &userAccessToken, err
-	}
-
-	return &userAccessToken, nil
+	return data, c.SendWithAuth(req, data)
 }
 
 func (c *Client) UserAccessTokenDelete(tokenID int) error {
-
-	req, err := c.NewRequest("DELETE", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/user_access_token/%d", tokenID)), nil)
+	url := fmt.Sprintf("%s/api/v1/user_access_token/%d", c.Url, tokenID)
+	req, err := c.NewRequest("DELETE", url, nil)
 	if err != nil {
 		return err
 	}
 
-	if err = c.SendWithAuth(req, nil); err != nil {
-		return err
-	}
-
-	return nil
+	return c.SendWithAuth(req, nil)
 }

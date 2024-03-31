@@ -2,77 +2,52 @@ package zammad
 
 import "fmt"
 
-func (c *Client) ObjectList() (*[]map[string]interface{}, error) {
-	var objects []map[string]interface{}
-
-	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, "/api/v1/object_manager_attributes"), nil)
+func (c *Client) ObjectList() (data *[]map[string]interface{}, err error) {
+	url := fmt.Sprintf("%s/api/v1/object_manager_attributes", c.Url)
+	req, err := c.NewRequest("GET", url, nil)
 	if err != nil {
-		return &objects, err
+		return
 	}
 
-	if err = c.SendWithAuth(req, &objects); err != nil {
-		return &objects, err
-	}
-
-	return &objects, nil
+	return data, c.SendWithAuth(req, data)
 }
 
-func (c *Client) ObjectShow(objectID int) (*map[string]interface{}, error) {
-	var object map[string]interface{}
-
-	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/object_manager_attributes/%d", objectID)), nil)
+func (c *Client) ObjectShow(objectID int) (data *map[string]interface{}, err error) {
+	url := fmt.Sprintf("%s/api/v1/object_manager_attributes/%d", c.Url, objectID)
+	req, err := c.NewRequest("GET", url, nil)
 	if err != nil {
-		return &object, err
+		return
 	}
 
-	if err = c.SendWithAuth(req, &object); err != nil {
-		return &object, err
-	}
-
-	return &object, nil
+	return data, c.SendWithAuth(req, data)
 }
 
-func (c *Client) ObjectCreate(o *map[string]interface{}) (*map[string]interface{}, error) {
-	var object map[string]interface{}
-
-	req, err := c.NewRequest("POST", fmt.Sprintf("%s%s", c.Url, "/api/v1/object_manager_attributes"), o)
+func (c *Client) ObjectCreate(o *map[string]interface{}) (data *map[string]interface{}, err error) {
+	url := fmt.Sprintf("%s/api/v1/object_manager_attributes", c.Url)
+	req, err := c.NewRequest("POST", url, o)
 	if err != nil {
-		return &object, err
+		return
 	}
 
-	if err = c.SendWithAuth(req, &object); err != nil {
-		return &object, err
-	}
-
-	return &object, nil
+	return data, c.SendWithAuth(req, data)
 }
 
-func (c *Client) ObjectUpdate(objectID int, o *map[string]interface{}) (*map[string]interface{}, error) {
-	var object map[string]interface{}
-
-	req, err := c.NewRequest("PUT", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/object_manager_attributes/%d", objectID)), o)
+func (c *Client) ObjectUpdate(objectID int, o *map[string]interface{}) (data *map[string]interface{}, err error) {
+	url := fmt.Sprintf("%s/api/v1/object_manager_attributes/%d", c.Url, objectID)
+	req, err := c.NewRequest("PUT", url, o)
 	if err != nil {
-		return &object, err
+		return
 	}
 
-	if err = c.SendWithAuth(req, &object); err != nil {
-		return &object, err
-	}
-
-	return &object, nil
+	return data, c.SendWithAuth(req, data)
 }
 
 func (c *Client) ObjectExecuteDatabaseMigration() error {
-
-	req, err := c.NewRequest("POST", fmt.Sprintf("%s%s", c.Url, "/api/v1/object_manager_attributes_execute_migrations"), nil)
+	url := fmt.Sprintf("%s/api/v1/object_manager_attributes_execute_migrations", c.Url)
+	req, err := c.NewRequest("POST", url, nil)
 	if err != nil {
 		return err
 	}
 
-	if err = c.SendWithAuth(req, nil); err != nil {
-		return err
-	}
-
-	return nil
+	return c.SendWithAuth(req, nil)
 }
-

@@ -2,47 +2,32 @@ package zammad
 
 import "fmt"
 
-func (c *Client) TicketArticleByTicket(ticketID int) (*[]map[string]interface{}, error) {
-	var ticketArticles []map[string]interface{}
-
-	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/ticket_articles/by_ticket/%d", ticketID)), nil)
+func (c *Client) TicketArticleByTicket(ticketID int) (data *[]map[string]interface{}, err error) {
+	url := fmt.Sprintf("%s/api/v1/ticket_articles/by_ticket/%d", c.Url, ticketID)
+	req, err := c.NewRequest("GET", url, nil)
 	if err != nil {
-		return &ticketArticles, err
+		return
 	}
 
-	if err = c.SendWithAuth(req, &ticketArticles); err != nil {
-		return &ticketArticles, err
-	}
-
-	return &ticketArticles, nil
+	return data, c.SendWithAuth(req, data)
 }
 
-func (c *Client) TicketArticleShow(ticketArticleID int) (*map[string]interface{}, error) {
-	var ticketArticle map[string]interface{}
-
-	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/ticket_articles/%d", ticketArticleID)), nil)
+func (c *Client) TicketArticleShow(ticketArticleID int) (data *[]map[string]interface{}, err error) {
+	url := fmt.Sprintf("%s/api/v1/ticket_articles/%d", c.Url, ticketArticleID)
+	req, err := c.NewRequest("GET", url, nil)
 	if err != nil {
-		return &ticketArticle, err
+		return
 	}
 
-	if err = c.SendWithAuth(req, &ticketArticle); err != nil {
-		return &ticketArticle, err
-	}
-
-	return &ticketArticle, nil
+	return data, c.SendWithAuth(req, data)
 }
 
-func (c *Client) TicketArticleCreate(t *map[string]interface{}) (*map[string]interface{}, error) {
-	var ticketArticle map[string]interface{}
-
-	req, err := c.NewRequest("POST", fmt.Sprintf("%s%s", c.Url, "/api/v1/ticket_articles"), t)
+func (c *Client) TicketArticleCreate(t *map[string]interface{}) (data *[]map[string]interface{}, err error) {
+	url := fmt.Sprintf("%s/api/v1/ticket_articles", c.Url)
+	req, err := c.NewRequest("POST", url, t)
 	if err != nil {
-		return &ticketArticle, err
+		return
 	}
 
-	if err = c.SendWithAuth(req, &ticketArticle); err != nil {
-		return &ticketArticle, err
-	}
-
-	return &ticketArticle, nil
+	return data, c.SendWithAuth(req, data)
 }

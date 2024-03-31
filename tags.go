@@ -2,117 +2,82 @@ package zammad
 
 import "fmt"
 
-func (c *Client) TagList(ticketID int) (*[]map[string]interface{}, error) {
-	var tags []map[string]interface{}
-
-	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/tags?object=Ticket&o_id=%d", ticketID)), nil)
+func (c *Client) TagList(ticketID int) (data *[]map[string]interface{}, err error) {
+	url := fmt.Sprintf("%s/api/v1/tags?object=Ticket&o_id=%d", c.Url, ticketID)
+	req, err := c.NewRequest("GET", url, nil)
 	if err != nil {
-		return &tags, err
+		return
 	}
 
-	if err = c.SendWithAuth(req, &tags); err != nil {
-		return &tags, err
-	}
-
-	return &tags, nil
+	return data, c.SendWithAuth(req, data)
 }
 
-func (c *Client) TagSearch(term string) (*[]map[string]interface{}, error) {
-	var tags []map[string]interface{}
-
-	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/tag_search?term=%s", term)), nil)
+func (c *Client) TagSearch(term string) (data *[]map[string]interface{}, err error) {
+	url := fmt.Sprintf("%s/api/v1/tag_search?term=%s", c.Url, term)
+	req, err := c.NewRequest("GET", url, nil)
 	if err != nil {
-		return &tags, err
+		return
 	}
 
-	if err = c.SendWithAuth(req, &tags); err != nil {
-		return &tags, err
-	}
-
-	return &tags, nil
+	return data, c.SendWithAuth(req, data)
 }
 
 func (c *Client) TagAdd(t *map[string]interface{}) error {
-
-	req, err := c.NewRequest("POST", fmt.Sprintf("%s%s", c.Url, "/api/v1/tags/add"), t)
+	url := fmt.Sprintf("%s/api/v1/tags/add", c.Url)
+	req, err := c.NewRequest("POST", url, t)
 	if err != nil {
 		return err
 	}
 
-	if err = c.SendWithAuth(req, nil); err != nil {
-		return err
-	}
-
-	return nil
+	return c.SendWithAuth(req, nil)
 }
 
 func (c *Client) TagRemove(t *map[string]interface{}) error {
-
-	req, err := c.NewRequest("DELETE", fmt.Sprintf("%s%s", c.Url, "/api/v1/tags/remove"), t)
+	url := fmt.Sprintf("%s/api/v1/tags/remove", c.Url)
+	req, err := c.NewRequest("DELETE", url, t)
 	if err != nil {
 		return err
 	}
 
-	if err = c.SendWithAuth(req, nil); err != nil {
-		return err
-	}
-
-	return nil
+	return c.SendWithAuth(req, nil)
 }
 
-func (c *Client) TagAdminList() (*[]map[string]interface{}, error) {
-	var tags []map[string]interface{}
-
-	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, "/api/v1/tag_list"), nil)
+func (c *Client) TagAdminList() (data *[]map[string]interface{}, err error) {
+	url := fmt.Sprintf("%s/api/v1/tag_list", c.Url)
+	req, err := c.NewRequest("GET", url, nil)
 	if err != nil {
-		return &tags, err
+		return
 	}
 
-	if err = c.SendWithAuth(req, &tags); err != nil {
-		return &tags, err
-	}
-
-	return &tags, nil
+	return data, c.SendWithAuth(req, data)
 }
 
 func (c *Client) TagAdminCreate(o *map[string]interface{}) error {
-
-	req, err := c.NewRequest("POST", fmt.Sprintf("%s%s", c.Url, "/api/v1/tag_list"), o)
+	url := fmt.Sprintf("%s/api/v1/tag_list", c.Url)
+	req, err := c.NewRequest("POST", url, o)
 	if err != nil {
 		return err
 	}
 
-	if err = c.SendWithAuth(req, nil); err != nil {
-		return err
-	}
-
-	return nil
+	return c.SendWithAuth(req, nil)
 }
 
 func (c *Client) TagAdminRename(tagID int, t *map[string]interface{}) error {
-
-	req, err := c.NewRequest("PUT", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/tag_list/%d", tagID)), t)
+	url := fmt.Sprintf("%s/api/v1/tag_list/%d", c.Url, tagID)
+	req, err := c.NewRequest("PUT", url, t)
 	if err != nil {
 		return err
 	}
 
-	if err = c.SendWithAuth(req, nil); err != nil {
-		return err
-	}
-
-	return nil
+	return c.SendWithAuth(req, nil)
 }
 
 func (c *Client) TagAdminDelete(tagID int) error {
-
-	req, err := c.NewRequest("DELETE", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/tag_list/%d", tagID)), nil)
+	url := fmt.Sprintf("%s/api/v1/tag_list/%d", c.Url, tagID)
+	req, err := c.NewRequest("DELETE", url, nil)
 	if err != nil {
 		return err
 	}
 
-	if err = c.SendWithAuth(req, nil); err != nil {
-		return err
-	}
-
-	return nil
+	return c.SendWithAuth(req, nil)
 }

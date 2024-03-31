@@ -2,76 +2,52 @@ package zammad
 
 import "fmt"
 
-func (c *Client) TicketStateList() (*[]map[string]interface{}, error) {
-	var ticketStates []map[string]interface{}
-
-	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, "/api/v1/ticket_states"), nil)
+func (c *Client) TicketStateList() (data *[]map[string]interface{}, err error) {
+	url := fmt.Sprintf("%s%s", c.Url, "/api/v1/ticket_states")
+	req, err := c.NewRequest("GET", url, nil)
 	if err != nil {
-		return &ticketStates, err
+		return
 	}
 
-	if err = c.SendWithAuth(req, &ticketStates); err != nil {
-		return &ticketStates, err
-	}
-
-	return &ticketStates, nil
+	return data, c.SendWithAuth(req, data)
 }
 
-func (c *Client) TicketStateShow(ticketStateID int) (*map[string]interface{}, error) {
-	var ticketState map[string]interface{}
-
-	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/ticket_states/%d", ticketStateID)), nil)
+func (c *Client) TicketStateShow(ticketStateID int) (data *map[string]interface{}, err error) {
+	url := fmt.Sprintf("%s/api/v1/ticket_states/%d", c.Url, ticketStateID)
+	req, err := c.NewRequest("GET", url, nil)
 	if err != nil {
-		return &ticketState, err
+		return
 	}
 
-	if err = c.SendWithAuth(req, &ticketState); err != nil {
-		return &ticketState, err
-	}
-
-	return &ticketState, nil
+	return data, c.SendWithAuth(req, data)
 }
 
-func (c *Client) TicketStateCreate(t *map[string]interface{}) (*map[string]interface{}, error) {
-	var ticketState map[string]interface{}
-
-	req, err := c.NewRequest("POST", fmt.Sprintf("%s%s", c.Url, "/api/v1/ticket_states"), t)
+func (c *Client) TicketStateCreate(t *map[string]interface{}) (data *map[string]interface{}, err error) {
+	url := fmt.Sprintf("%s/api/v1/ticket_states", c.Url)
+	req, err := c.NewRequest("POST", url, t)
 	if err != nil {
-		return &ticketState, err
+		return
 	}
 
-	if err = c.SendWithAuth(req, &ticketState); err != nil {
-		return &ticketState, err
-	}
-
-	return &ticketState, nil
+	return data, c.SendWithAuth(req, data)
 }
 
-func (c *Client) TicketStateUpdate(ticketStateID int, t *map[string]interface{}) (*map[string]interface{}, error) {
-	var ticketState map[string]interface{}
-
-	req, err := c.NewRequest("PUT", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/ticket_states/%d", ticketStateID)), t)
+func (c *Client) TicketStateUpdate(ticketStateID int, t *map[string]interface{}) (data *map[string]interface{}, err error) {
+	url := fmt.Sprintf("%s/api/v1/ticket_states/%d", c.Url, ticketStateID)
+	req, err := c.NewRequest("PUT", url, t)
 	if err != nil {
-		return &ticketState, err
+		return
 	}
 
-	if err = c.SendWithAuth(req, &ticketState); err != nil {
-		return &ticketState, err
-	}
-
-	return &ticketState, nil
+	return data, c.SendWithAuth(req, data)
 }
 
 func (c *Client) TicketStateDelete(ticketStateID int) error {
-
-	req, err := c.NewRequest("DELETE", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/ticket_states/%d", ticketStateID)), nil)
+	url := fmt.Sprintf("%s/api/v1/ticket_states/%d", c.Url, ticketStateID)
+	req, err := c.NewRequest("DELETE", url, nil)
 	if err != nil {
 		return err
 	}
 
-	if err = c.SendWithAuth(req, nil); err != nil {
-		return err
-	}
-
-	return nil
+	return c.SendWithAuth(req, nil)
 }

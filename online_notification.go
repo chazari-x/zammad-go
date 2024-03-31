@@ -2,75 +2,52 @@ package zammad
 
 import "fmt"
 
-func (c *Client) OnlineNotificationList() (*[]map[string]interface{}, error) {
-	var notifications []map[string]interface{}
-
-	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, "/api/v1/online_notifications"), nil)
+func (c *Client) OnlineNotificationList() (data *[]map[string]interface{}, err error) {
+	url := fmt.Sprintf("%s/api/v1/online_notifications", c.Url)
+	req, err := c.NewRequest("GET", url, nil)
 	if err != nil {
-		return &notifications, err
+		return
 	}
 
-	if err = c.SendWithAuth(req, &notifications); err != nil {
-		return &notifications, err
-	}
-
-	return &notifications, nil
+	return data, c.SendWithAuth(req, data)
 }
 
-func (c *Client) OnlineNotificationShow(notificationID int) (*map[string]interface{}, error) {
-	var notification map[string]interface{}
-
-	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/online_notifications/%d", notificationID)), nil)
+func (c *Client) OnlineNotificationShow(notificationID int) (data *map[string]interface{}, err error) {
+	url := fmt.Sprintf("%s/api/v1/online_notifications/%d", c.Url, notificationID)
+	req, err := c.NewRequest("GET", url, nil)
 	if err != nil {
-		return &notification, err
+		return
 	}
 
-	if err = c.SendWithAuth(req, &notification); err != nil {
-		return &notification, err
-	}
-
-	return &notification, nil
+	return data, c.SendWithAuth(req, data)
 }
 
-func (c *Client) OnlineNotificationUpdate(notificationID int, n *map[string]interface{}) (*map[string]interface{}, error) {
-	var notification map[string]interface{}
-
-	req, err := c.NewRequest("PUT", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/online_notifications/%d", notificationID)), n)
+func (c *Client) OnlineNotificationUpdate(notificationID int, n *map[string]interface{}) (data *map[string]interface{}, err error) {
+	url := fmt.Sprintf("%s/api/v1/online_notifications/%d", c.Url, notificationID)
+	req, err := c.NewRequest("PUT", url, n)
 	if err != nil {
-		return &notification, err
+		return
 	}
 
-	if err = c.SendWithAuth(req, &notification); err != nil {
-		return &notification, err
-	}
-
-	return &notification, nil
+	return data, c.SendWithAuth(req, data)
 }
 
 func (c *Client) OnlineNotificationDelete(notificationID int) error {
-
-	req, err := c.NewRequest("DELETE", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/online_notifications/%d", notificationID)), nil)
+	url := fmt.Sprintf("%s/api/v1/online_notifications/%d", c.Url, notificationID)
+	req, err := c.NewRequest("DELETE", url, nil)
 	if err != nil {
 		return err
 	}
 
-	if err = c.SendWithAuth(req, nil); err != nil {
-		return err
-	}
-
-	return nil
+	return c.SendWithAuth(req, nil)
 }
 
 func (c *Client) OnlineNotificationMarkAllAsRead() error {
-
-	req, err := c.NewRequest("POST", fmt.Sprintf("%s%s", c.Url, "/api/v1/online_notifications/mark_all_as_read"), nil)
+	url := fmt.Sprintf("%s/api/v1/online_notifications/mark_all_as_read", c.Url)
+	req, err := c.NewRequest("POST", url, nil)
 	if err != nil {
 		return err
 	}
 
-	if err = c.SendWithAuth(req, nil); err != nil {
-		return err
-	}
-
-	return nil
+	return c.SendWithAuth(req, nil)
 }

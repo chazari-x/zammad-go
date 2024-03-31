@@ -2,91 +2,62 @@ package zammad
 
 import "fmt"
 
-func (c *Client) OrganizationList() (*[]map[string]interface{}, error) {
-	var organizations []map[string]interface{}
-
-	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, "/api/v1/organizations"), nil)
+func (c *Client) OrganizationList() (data *[]map[string]interface{}, err error) {
+	url := fmt.Sprintf("%s/api/v1/organizations", c.Url)
+	req, err := c.NewRequest("GET", url, nil)
 	if err != nil {
-		return &organizations, err
+		return
 	}
 
-	if err = c.SendWithAuth(req, &organizations); err != nil {
-		return &organizations, err
-	}
-
-	return &organizations, nil
+	return data, c.SendWithAuth(req, data)
 }
 
-func (c *Client) OrganizationSearch(query string, limit int) (*[]map[string]interface{}, error) {
-	var organizations []map[string]interface{}
-
-	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/organizations/search?query=%s&limit=%d", query, limit)), nil)
+func (c *Client) OrganizationSearch(query string, limit int) (data *[]map[string]interface{}, err error) {
+	url := fmt.Sprintf("%s/api/v1/organizations/search?query=%s&limit=%d", c.Url, query, limit)
+	req, err := c.NewRequest("GET", url, nil)
 	if err != nil {
-		return &organizations, err
+		return
 	}
 
-	if err = c.SendWithAuth(req, &organizations); err != nil {
-		return &organizations, err
-	}
-
-	return &organizations, nil
+	return data, c.SendWithAuth(req, data)
 }
 
-func (c *Client) OrganizationShow(organizationID int) (*map[string]interface{}, error) {
-	var organization map[string]interface{}
-
-	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/organizations/%d", organizationID)), nil)
+func (c *Client) OrganizationShow(organizationID int) (data *[]map[string]interface{}, err error) {
+	url := fmt.Sprintf("%s/api/v1/organizations/%d", c.Url, organizationID)
+	req, err := c.NewRequest("GET", url, nil)
 	if err != nil {
-		return &organization, err
+		return
 	}
 
-	if err = c.SendWithAuth(req, &organization); err != nil {
-		return &organization, err
-	}
-
-	return &organization, nil
+	return data, c.SendWithAuth(req, data)
 }
 
-func (c *Client) OrganizationCreate(o *map[string]interface{}) (*map[string]interface{}, error) {
-	var organization map[string]interface{}
-
-	req, err := c.NewRequest("POST", fmt.Sprintf("%s%s", c.Url, "/api/v1/organizations"), o)
+func (c *Client) OrganizationCreate(o *map[string]interface{}) (data *[]map[string]interface{}, err error) {
+	url := fmt.Sprintf("%s/api/v1/organizations", c.Url)
+	req, err := c.NewRequest("POST", url, o)
 	if err != nil {
-		return &organization, err
+		return
 	}
 
-	if err = c.SendWithAuth(req, &organization); err != nil {
-		return &organization, err
-	}
-
-	return &organization, nil
+	return data, c.SendWithAuth(req, data)
 }
 
-func (c *Client) OrganizationUpdate(organizationID int, o *map[string]interface{}) (*map[string]interface{}, error) {
-	var organization map[string]interface{}
-
-	req, err := c.NewRequest("PUT", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/organizations/%d", organizationID)), o)
+func (c *Client) OrganizationUpdate(organizationID int, o *map[string]interface{}) (data *[]map[string]interface{}, err error) {
+	url := fmt.Sprintf("%s/api/v1/organizations/%d", c.Url, organizationID)
+	req, err := c.NewRequest("PUT", url, o)
 	if err != nil {
-		return &organization, err
+		return
 	}
 
-	if err = c.SendWithAuth(req, &organization); err != nil {
-		return &organization, err
-	}
-
-	return &organization, nil
+	return data, c.SendWithAuth(req, data)
 }
 
 func (c *Client) OrganizationDelete(organizationID int) error {
-
-	req, err := c.NewRequest("DELETE", fmt.Sprintf("%s%s", c.Url, fmt.Sprintf("/api/v1/organizations/%d", organizationID)), nil)
+	url := fmt.Sprintf("%s/api/v1/organizations/%d", c.Url, organizationID)
+	req, err := c.NewRequest("DELETE", url, nil)
 	if err != nil {
 		return err
 	}
 
-	if err = c.SendWithAuth(req, nil); err != nil {
-		return err
-	}
-
-	return nil
+	return c.SendWithAuth(req, nil)
 }

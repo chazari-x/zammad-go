@@ -6,26 +6,24 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"net/http"
 )
 
 func NewClient(client *Client) (*Client, error) {
-
 	if client.Url == "" {
 		return nil, errors.New("APIBase is required to create a Client")
 	}
 
 	if (client.Username == "" || client.Password == "") && client.Token == "" && client.OAuth == "" {
-		return nil, errors.New("Username and password, token or OAuth2 are required to create a Client")
+		return nil, errors.New("username and password, token or OAuth2 are required to create a Client")
 	}
 
 	if (client.Username != "" || client.Password != "") && (client.Token != "" || client.OAuth != "") {
-		return nil, errors.New("Only one authentication type between username and password, token and OAuth is supported")
+		return nil, errors.New("only one authentication type between username and password, token and OAuth is supported")
 	}
 
 	if client.Token != "" && client.OAuth != "" {
-		return nil, errors.New("Only one between token and oauth must be specified")
+		return nil, errors.New("only one between token and oauth must be specified")
 	}
 
 	client.Client = &http.Client{}
@@ -50,9 +48,8 @@ func (c *Client) NewRequest(method, url string, payload interface{}) (*http.Requ
 // Send makes a request to the API, the response body will be
 // unmarshaled into v, or if v is an io.Writer, the response will
 // be written to it without decoding
-func (c *Client) Send(req *http.Request, v interface{}) error {
+func (c *Client) Send(req *http.Request, v interface{}) (err error) {
 	var (
-		err  error
 		resp *http.Response
 		data []byte
 	)
@@ -66,20 +63,19 @@ func (c *Client) Send(req *http.Request, v interface{}) error {
 	}
 
 	resp, err = c.Client.Do(req)
-
 	if err != nil {
-		return err
+		return
 	}
-	defer resp.Body.Close()
+	defer func() {
+		_ = resp.Body.Close()
+	}()
 
 	if resp.StatusCode < 200 || resp.StatusCode > 299 {
 		errResp := &ErrorResponse{}
-		data, err = ioutil.ReadAll(resp.Body)
-
-		if err == nil && len(data) > 0 {
+		if data, err = io.ReadAll(resp.Body); err == nil && len(data) > 0 {
 			err = json.Unmarshal(data, errResp)
 			if err != nil {
-				return err
+				return
 			}
 		}
 
@@ -87,15 +83,12 @@ func (c *Client) Send(req *http.Request, v interface{}) error {
 	}
 
 	if v == nil {
-		return nil
+		return
 	}
 
 	if w, ok := v.(io.Writer); ok {
 		_, err = io.Copy(w, resp.Body)
-		if err != nil {
-			return err
-		}
-		return nil
+		return
 	}
 
 	return json.NewDecoder(resp.Body).Decode(v)
@@ -103,7 +96,6 @@ func (c *Client) Send(req *http.Request, v interface{}) error {
 
 // SendWithAuth makes a request to the API and apply proper authentication header automatically.
 func (c *Client) SendWithAuth(req *http.Request, v interface{}) error {
-
 	//Detect Authentication Type
 	if c.Username != "" && c.Password != "" {
 		req.SetBasicAuth(c.Username, c.Password)
